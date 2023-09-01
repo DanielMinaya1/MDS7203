@@ -1,0 +1,122 @@
+% Template:     Informe LaTeX
+% Documento:    Archivo principal
+% Versión:      8.2.3 (03/04/2023)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        pablo@ppizarror.com
+%
+% Manual template: [https://latex.ppizarror.com/informe]
+% Licencia MIT:    [https://opensource.org/licenses/MIT]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[
+	spanish, % Idioma: spanish, english, etc.
+	letterpaper, oneside
+]{article}
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\documenttitle {\textbf{Tarea 1}}
+\def\documentsubtitle {}
+\def\documentsubject {}
+
+\def\documentauthor {Daniel Minaya}
+\def\coursename {\textbf{Modelos Generativos Profundos}}
+\def\coursecode {\textbf{MDS7203}}
+
+\def\universityname {Universidad de Chile}
+\def\universityfaculty {Facultad de Ciencias Físicas y Matemáticas}
+\def\universitydepartment {Departamento de Ingeniería Matemática}
+\def\universitydepartmentimage {../Template_Informe/img/departamentos/dim}
+\def\universitydepartmentimagecfg {height=1.57cm}
+\def\universitylocation {Santiago de Chile}
+
+% INTEGRANTES, PROFESORES Y FECHAS
+\def\authortable {
+	\begin{tabular}{ll}
+		\textbf{Estudiante:}
+		& \begin{tabular}[t]{l}
+			Daniel Minaya
+		\end{tabular} \\
+		\textbf{Profesor:}
+		& \begin{tabular}[t]{l}
+			Felipe Tobar
+		\end{tabular} \\
+		\textbf{Auxiliares:}
+		& \begin{tabular}[t]{l}
+			Cristóbal Alcázar\\
+			Camilo Carvajal
+		\end{tabular} \\
+		& \\
+		\multicolumn{2}{l}{\textbf{Fecha de entrega:} 1 de septiembre}
+	\end{tabular}
+}
+
+% IMPORTACIÓN DEL TEMPLATE
+\input{../Template_Informe/template}
+
+\newcommand\sol[1]{%
+	{\color{Blue}{#1}}
+}
+
+\usepackage{paracol}
+
+% INICIO DE PÁGINAS
+\begin{document}
+
+% PORTADA
+\templatePortrait
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\templatePagecfg
+
+% RESUMEN O ABSTRACT
+%\begin{abstractd}
+%	\lipsum[1] % Párrafo ejemplo, se puede borrar
+%\end{abstractd}
+
+% TABLA DE CONTENIDOS - ÍNDICE
+%\templateIndex
+
+% CONFIGURACIONES FINALES
+\templateFinalcfg
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\section*{Parte 1.}
+Generamos $\mu$ de una distribución semi-normal con varianza $\sigma^2=10$. Por el teorema de Bayes, tenemos que
+
+$$p(\mu|x_1,\ldots,x_n)=\frac{p(x_1,\ldots,x_n|\mu)p(\mu)}{p(x_1,\ldots,x_n)}=\frac{p(x_1|\mu)\cdot\ldots\cdot p(x_n|\mu)p(\mu)}{p(x_1,\ldots,x_n)},$$
+
+donde $p(x_i|\mu)\sim\mathcal N(\mu,5)$ y $p(\mu)\sim|\mathcal N(0,10)|$.
+	
+\begin{figure}[H]
+	\subfloat{\includegraphics[scale=0.5]{Imágenes/trajectories_1d.pdf}}
+	\caption{Trayectorias de \(\mu\) mediante Metropolis-Hastings.}
+\end{figure}
+
+\section*{Parte 2.}
+Ahora queremos repetir el proceso donde $$x_i\sim\sum_{j=1}^n\lambda_j\mathcal N(\mu_j,5).$$
+
+Elegiremos $(\lambda_1,\lambda_2,\lambda_3)$ fijos de modo que $\lambda_1+\lambda_2+\lambda_3=1$ y samplearemos $\mu\sim\text{MVN}(\Mu,\Sigma)$ con
+\[\Mu=\begin{pmatrix}
+	1\\10\\30
+\end{pmatrix},\quad\Sigma=\begin{pmatrix}
+1&0&0\\0&3&0\\0&0&5
+\end{pmatrix}\]
+es decir, $\mu_1,\mu_2,\mu_3$ independientes. En este caso, la distribución a simular estará dada por
+
+$$p(\mu_1,\mu_2,\mu_3|x_1,\ldots,x_n)=\frac{p(x_1,\ldots,x_n|\mu)p(\mu)}{p(x_1,\ldots,x_n)}=\frac{p(x_1|\mu_1,\mu_2,\mu_3)\cdot\ldots\cdot p(x_n|\mu_1,\mu_2,\mu_3)p(\mu_1,\mu_2,\mu_3)}{p(x_1,\ldots,x_n)},$$
+
+Como $\mu_1,\mu_2,\mu_3$ son independientes, entonces $x_i\sim\sum_{j=1}^3\mathcal N(\lambda_j\mu_j,5\lambda_j^2)$, es decir, $$p(x_i|\mu_1,\mu_2,\mu_3)=\mathcal N(\sum_j\lambda_j\mu_j,\sum_j5\lambda_j^2)=\mathcal N(\lambda^T\mu,5|\lambda|^2),$$
+donde hemos denotado \(\mu=(\mu_1,\mu_2,\mu_3)\).
+
+\begin{figure}[H]
+	\subfloat{\includegraphics[scale=0.5]{Imágenes/trajectories_3d.pdf}}
+	\caption{Trayectorias de \(\mu\) mediante Metropolis-Hastings.}
+\end{figure}
+
+En ambas partes podemos notar que el algoritmo de Metropolis-Hastings logra converger a los valores reales de \(\mu\), sin embargo, no logra estabilizarse del todo. Además, a medida que aumentamos el número de datos disponibles, la estimación tiene menos varianza, es decir, presenta menor ruido.
+
+% FIN DEL DOCUMENTO
+\end{document}
