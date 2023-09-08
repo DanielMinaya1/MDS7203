@@ -1,0 +1,183 @@
+% Template:     Informe LaTeX
+% Documento:    Archivo principal
+% Versión:      8.2.3 (03/04/2023)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        pablo@ppizarror.com
+%
+% Manual template: [https://latex.ppizarror.com/informe]
+% Licencia MIT:    [https://opensource.org/licenses/MIT]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[
+	spanish, % Idioma: spanish, english, etc.
+	letterpaper, oneside
+]{article}
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\documenttitle {\textbf{Laboratorio 1}}
+\def\documentsubtitle {}
+\def\documentsubject {}
+
+\def\documentauthor {Daniel Minaya}
+\def\coursename {\textbf{Modelos Generativos Profundos}}
+\def\coursecode {\textbf{MDS7203}}
+
+\def\universityname {Universidad de Chile}
+\def\universityfaculty {Facultad de Ciencias Físicas y Matemáticas}
+\def\universitydepartment {Departamento de Ingeniería Matemática}
+\def\universitydepartmentimage {../Template_Informe/img/departamentos/dim}
+\def\universitydepartmentimagecfg {height=1.57cm}
+\def\universitylocation {Santiago de Chile}
+
+% INTEGRANTES, PROFESORES Y FECHAS
+\def\authortable {
+	\begin{tabular}{ll}
+		\textbf{Estudiante:}
+		& \begin{tabular}[t]{l}
+			Daniel Minaya
+		\end{tabular} \\
+		\textbf{Profesor:}
+		& \begin{tabular}[t]{l}
+			Felipe Tobar
+		\end{tabular} \\
+		\textbf{Auxiliares:}
+		& \begin{tabular}[t]{l}
+			Cristóbal Alcázar\\
+			Camilo Carvajal
+		\end{tabular} \\
+		& \\
+		\multicolumn{2}{l}{\textbf{Fecha de entrega:} 8 de septiembre}
+	\end{tabular}
+}
+
+% IMPORTACIÓN DEL TEMPLATE
+\input{../Template_Informe/template}
+
+\newcommand\sol[1]{%
+	{\color{Blue}{#1}}
+}
+
+\usepackage{paracol}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+% INICIO DE PÁGINAS
+\begin{document}
+
+% PORTADA
+\templatePortrait
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\templatePagecfg
+
+% RESUMEN O ABSTRACT
+%\begin{abstractd}
+%	\lipsum[1] % Párrafo ejemplo, se puede borrar
+%\end{abstractd}
+
+% TABLA DE CONTENIDOS - ÍNDICE
+%\templateIndex
+
+% CONFIGURACIONES FINALES
+\templateFinalcfg
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\section*{Parte 2 (Modelos gráficos)}
+\begin{enumerate}
+	\item[(a)] Sabemos que la cantidad de polen puede causar irritación en nariz y ojos en algunos casos, por lo que habría una dependencia entre estas dos variables. Además, la cantidad de polen también afecta a la probabilidad de sufrir Rinitis alérgica, por lo que tendríamos otra dependencia. También es sabido que si se tiene Rinitis alérgica, entonces es probable tener irritación en nariz y ojos. Por último, suponiendo que la variable de tener un familiar con Rinitis alérgica hace referencia a una enfermedad hereditaria, y no a una enfermedad que pueda ser contagiada, tendríamos que esta variable aumentaría las posibilidades de tener la Rinitas alérgica.
+
+	Definiendo las variables aleatorias \(I=\) ``Tener irritación en nariz y ojos'', \(P=\) ``cantidad de polen en el ambiente'', \(R=\) ``Tener Rinitis alérgica'' y \(F=\) ``Tener un familiar con Rinitis alérgica'', entonces, por todo lo anterior, el modelo gráfico que representa el problema estaría dado por el siguiente DAG:
+
+\begin{center}\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+	thick,main node/.style={circle,draw,font=\sffamily\small\bfseries}]
+	
+	\node[main node] (1) {\(P\)};
+	\node[main node] (2) [below left of=1] {\(F\)};
+	\node[main node] (3) [below right of=2] {\(R\)};
+	\node[main node, preaction={fill=gray}, opacity=0.5] (5) [below right of=1] {\color{white}{\(I\)}};
+	\node[main node] (4) [below right of=1] {\(I\)};
+	
+	\path[every node/.style={font=\sffamily\small}]
+	(1) edge node [left] {} (4)
+	(1) edge node [left] {} (3)
+	(1) edge node [left] {} (3)
+	(2) edge node [left] {} (3)
+	(3) edge node [left] {} (4);
+\end{tikzpicture}\end{center}
+
+\item[(b)] Usando la notación anterior, queremos encontrar \(\P(R|I)\). Según el modelo gráfico planteado, la probabilidad conjunta está dada por:\[\P(P,I,F,R)=\P(P)\cdot\P(F)\cdot\P(R|F,P)\cdot\P(I|R,P),\]
+donde todas las probabilidades en el lado izquierdo son conocidas a priori. De este modo, por el teorema de Bayes tenemos:\[\P(R|I)=\frac{\P(I|R)\P(R)}{\P(I)},\]
+luego, por el teorema de probabilidades tenemos:\begin{align*}
+	\P(I|R)&=\sum_{k}\P(I|R,P=k)\P(P=k),\\
+	\P(R)&=\sum_{k}\sum_{j}\P(R|F=j,P=k)\P(F=j)\P(P=k),\\
+	\P(I)&=\sum_{k}\sum_{j}\P(I|R=j,P=k)\P(R=j)\P(P=k),
+\end{align*}
+donde las primeras dos igualdades están en términos de probabilidades conocidas, mientras que la última igualdad tiene el término \(\P(R=j)\) que se conoce de la segunda igualdad, por lo que \(\P(R|I)\) se obtendría calculando las probabilidades respectivas.
+
+\item[(c)] En este caso debemos agregar una nueva variable al modelo gráfico, llamemósla \(T=\) ``Test positivo''. Esta variable solo afecta a la probabilidad de tener Rinitis alérgica, por lo que el nuevo modelo gráfico estaría dado por:
+\begin{center}\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+		thick,main node/.style={circle,draw,font=\sffamily\small\bfseries}]
+		
+		\node[main node] (1) {\(P\)};
+		\node[main node] (2) [below left of=1] {\(F\)};
+		\node[main node] (3) [below right of=2] {\(R\)};
+		\node[main node, preaction={fill=gray}, opacity=0.5] (5) [below right of=1] {\color{white}{\(I\)}};
+		\node[main node] (4) [below right of=1] {\(I\)};
+		\node[main node] (6) [right of=3] {\(T\)};
+		
+		\path[every node/.style={font=\sffamily\small}]
+		(1) edge node [left] {} (4)
+		(1) edge node [left] {} (3)
+		(1) edge node [left] {} (3)
+		(2) edge node [left] {} (3)
+		(6) edge node [left] {} (3)
+		(3) edge node [left] {} (4);
+\end{tikzpicture}\end{center}
+Con este nuevo modelo gráfico, la nueva probabilidad conjunto sería:
+\[\P(P,I,F,R,T)=\P(P)\cdot\P(F)\cdot\P(T)\cdot\P(R|F,P,T)\P(I|R,P),\]
+luego la probabilidad \(\P(R|I)=\frac{\P(I|R)\P(R)}{\P(I)}\) solo vería afectada su término \(\P(R)\), el cual ahora estaría dado por
+\begin{align*}
+	\P(R)&=\sum_{k}\sum_{j}\sum_i\P(R|T=i,F=j,P=k)\P(T=i)\P(F=j)\P(P=k).
+\end{align*}
+Notar que esto afectaría indirectamente a \(\P(I)\) también, pues depende de \(\P(R)\).
+
+\item[(d)] En este caso utilizamos \(P\) como variable continua que sigue una distribución semi-normal, pues al tratarse de la cantidad de polen en el ambiente, ésta puede tomar solo valores positivos. En este caso, la expresión para \(\P(R|I)\) cambia, pues pasamos \(P\) de una variable discreta a una continua, por lo que:
+\begin{align*}
+	\P(I|R)&=\int_0^\infty\P(I|R,P=x)f_P(x)dx,\\
+	\P(R)&=\int_0^\infty\sum_{j}\sum_i\P(R|T=i,F=j,P=x)\P(T=i)\P(F=j)f_P(x)dx,\\
+	\P(I)&=\int_0^\infty\sum_{j}\P(I|R=j,P=x)\P(R=j)f_P(x)dx,
+\end{align*}
+donde \(f_P(x)\) es la densidad de una semi-normal, es decir, \(f_P(x)=\sqrt{\frac{2}{\sigma^2\pi}}e^{-x^2/2\sigma^2}\).
+
+\item[(e)] Definamos \(X_t=\) ``cantidad de polen en el tiempo \(t\)'' e \(Y_t=\) ``irritación en nariz y ojos en el tiempo \(t\)'' procesos aleatorios. Como suponemos que el futuro es independiente del paso condicionado al presente, entonces \((X_t)_t\) es una cadena de Markov, por lo que nuestro modelo gráfico ahora es un Hidden Markov Model representado por:
+
+\begin{center}\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+		thick,main node/.style={circle,draw,font=\sffamily\small\bfseries}]
+		
+		\node[main node] (1) {\(X_0\)};
+		\node[main node] (2) [right of=1] {\(X_1\)};
+		\node[main node] (3) [right of=2] {\(X_2\)};
+		\coordinate[right of=3] (4);
+		\node[main node, preaction={fill=gray}, opacity=0.5] (8) [below of=1] {\color{white}{\(Y_0\)}};
+		\node[main node] (5) [below of=1] {\(Y_0\)};
+		\node[main node, preaction={fill=gray}, opacity=0.5] (8) [below of=2] {\color{white}{\(Y_1\)}};
+		\node[main node] (6) [below of=2] {\(Y_1\)};
+		\node[main node, preaction={fill=gray}, opacity=0.5] (8) [below of=3] {\color{white}{\(Y_2\)}};
+		\node[main node] (7) [below of=3] {\(Y_2\)};
+		
+		\path[every node/.style={font=\sffamily\small}]
+		(1) edge node [left] {} (2)
+		(2) edge node [left] {} (3)
+		(3) edge node [left] {} (4)
+		(1) edge node [left] {} (5)
+		(2) edge node [left] {} (6)
+		(3) edge node [left] {} (7);
+\end{tikzpicture}\end{center}
+
+Queremos predecir la cantidad de polen cada 30 minutos usando como única medición el nivel de irritación en nariz y ojos, es decir, se quiere calcular \(\P(X_{30t}|Y_{1:30t})=\P(X_{30t}|Y_1,\ldots,Y_{30t})\), para lo cual se podría utilizar el filtro de Kalman.
+\end{enumerate}
+% FIN DEL DOCUMENTO
+\end{document}
