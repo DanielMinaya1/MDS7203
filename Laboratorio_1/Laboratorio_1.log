@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.4.2)  7 SEP 2023 21:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.4.2)  8 SEP 2023 23:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -3064,27 +3064,84 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 
 
-]
+] [2.3]
+<Imágenes/distributions-1d.pdf, id=45, 491.90337pt x 324.60962pt>
+File: Imágenes/distributions-1d.pdf Graphic file (type pdf)
+<use Imágenes/distributions-1d.pdf>
+Package pdftex.def Info: Imágenes/distributions-1d.pdf  used on input line 239
+.
+(pdftex.def)             Requested size: 295.14429pt x 194.76726pt.
+ [3.4]
+<Imágenes/ot-1d.pdf, id=56, 952.76239pt x 332.12378pt>
+File: Imágenes/ot-1d.pdf Graphic file (type pdf)
+<use Imágenes/ot-1d.pdf>
+Package pdftex.def Info: Imágenes/ot-1d.pdf  used on input line 246.
+(pdftex.def)             Requested size: 476.38004pt x 166.06148pt.
+<Imágenes/samples-2d.pdf, id=57, 484.34387pt x 324.60962pt>
+File: Imágenes/samples-2d.pdf Graphic file (type pdf)
+<use Imágenes/samples-2d.pdf>
+Package pdftex.def Info: Imágenes/samples-2d.pdf  used on input line 264.
+(pdftex.def)             Requested size: 290.60855pt x 194.76726pt.
+ [4.5 <./Imágenes/distributions-1d.pdf> <./Imágenes/ot-1d.pdf>]
+<Imágenes/ot-2d.pdf, id=136, 937.21358pt x 277.81177pt>
+File: Imágenes/ot-2d.pdf Graphic file (type pdf)
+<use Imágenes/ot-2d.pdf>
+Package pdftex.def Info: Imágenes/ot-2d.pdf  used on input line 271.
+(pdftex.def)             Requested size: 468.60564pt x 138.90553pt.
+<Imágenes/asignations.pdf, id=137, 484.34387pt x 324.60962pt>
+File: Imágenes/asignations.pdf Graphic file (type pdf)
+<use Imágenes/asignations.pdf>
+Package pdftex.def Info: Imágenes/asignations.pdf  used on input line 278.
+(pdftex.def)             Requested size: 266.38994pt x 178.53583pt.
+ [5.6 <./Imágenes/samples-2d.pdf> <./Imágenes/ot-2d.pdf> <./Imágenes/asignat
+ions.pdf>]
+<Imágenes/barycenter_0.00.jpg, id=249, 932.283pt x 380.8629pt>
+File: Imágenes/barycenter_0.00.jpg Graphic file (type jpg)
+<use Imágenes/barycenter_0.00.jpg>
+Package pdftex.def Info: Imágenes/barycenter_0.00.jpg  used on input line 286.
+
+(pdftex.def)             Requested size: 254.87782pt x 152.92941pt.
+<Imágenes/barycenter_0.76.jpg, id=250, 932.283pt x 380.8629pt>
+File: Imágenes/barycenter_0.76.jpg Graphic file (type jpg)
+<use Imágenes/barycenter_0.76.jpg>
+Package pdftex.def Info: Imágenes/barycenter_0.76.jpg  used on input line 287.
+
+(pdftex.def)             Requested size: 254.87782pt x 152.92941pt.
+<Imágenes/barycenter_0.33.jpg, id=251, 932.283pt x 380.8629pt>
+File: Imágenes/barycenter_0.33.jpg Graphic file (type jpg)
+<use Imágenes/barycenter_0.33.jpg>
+Package pdftex.def Info: Imágenes/barycenter_0.33.jpg  used on input line 290.
+
+(pdftex.def)             Requested size: 254.87782pt x 152.92941pt.
+<Imágenes/barycenter_1.00.jpg, id=252, 932.283pt x 380.8629pt>
+File: Imágenes/barycenter_1.00.jpg Graphic file (type jpg)
+<use Imágenes/barycenter_1.00.jpg>
+Package pdftex.def Info: Imágenes/barycenter_1.00.jpg  used on input line 291.
+
+(pdftex.def)             Requested size: 254.87782pt x 152.92941pt.
+
 (C:\Users\Daniel Minaya Vargas\AppData\Local\Programs\MiKTeX\tex/generic/string
 enc\se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
-) [2.3] (Laboratorio_1.aux
+) [6.7 <./Imágenes/barycenter_0.00.jpg> <./Imágenes/barycenter_0.76.jpg> <./I
+mágenes/barycenter_0.33.jpg> <./Imágenes/barycenter_1.00.jpg>] (Laboratorio_1
+.aux
 LaTeX Info: Redefining \. on input line 27.
 LaTeX Info: Redefining \% on input line 27.
 ) ) 
 Here is how much of TeX's memory you used:
- 44413 strings out of 476334
- 827371 string characters out of 5780856
- 1869382 words of memory out of 5000000
- 63989 multiletter control sequences out of 15000+600000
- 588675 words of font info for 99 fonts, out of 8000000 for 9000
+ 44544 strings out of 476334
+ 830688 string characters out of 5780856
+ 1873382 words of memory out of 5000000
+ 64085 multiletter control sequences out of 15000+600000
+ 594655 words of font info for 101 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 113i,16n,109p,17395b,2311s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 113i,16n,109p,17395b,2414s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/enc/dvips
-/lm/lm-rm.enc}{C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/font
-s/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Daniel Minaya Vargas/AppData/Local/Progr
-ams/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Daniel Minaya Vargas/AppData/
-Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Daniel Minaya 
+/lm/lm-mathit.enc}{C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/
+fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Daniel Minaya Vargas/AppData/Local/Progr
+ams/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Daniel Minaya Vargas/AppD
+ata/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Daniel Minaya 
 Vargas/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}<C:/Users
 /Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx1
 2.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/
@@ -3092,22 +3149,24 @@ public/lm/lmbxi10.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/Daniel Minaya Vargas/AppData/Loc
 al/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Daniel Minaya Var
 gas/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Da
-niel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pf
+niel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pf
 b><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/lm/lmr10.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/lm/lmr12.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/Daniel Minaya Vargas/AppDa
-ta/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/Daniel Minaya
- Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/
-Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10
-.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/lm/lmsy8.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/Daniel Minaya Vargas/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on Laboratorio_1.pdf (3 pages, 237818 bytes).
+ic/lm/lmmi8.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fo
+nts/type1/public/lm/lmr10.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Daniel Minaya Vargas/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/Daniel Minay
+a Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users
+/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.
+pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/pu
+blic/lm/lmsy10.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/Programs/MiKTeX
+/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Daniel Minaya Vargas/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/Daniel 
+Minaya Vargas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols
+/msbm7.pfb>
+Output written on Laboratorio_1.pdf (7 pages, 590134 bytes).
 PDF statistics:
- 117 PDF objects out of 1000 (max. 8388607)
- 78 compressed objects within 1 object stream
- 4 named destinations out of 1000 (max. 500000)
- 22 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 344 PDF objects out of 1000 (max. 8388607)
+ 148 compressed objects within 2 object streams
+ 19 named destinations out of 1000 (max. 500000)
+ 67 words of extra memory for PDF output out of 10000 (max. 10000000)
 

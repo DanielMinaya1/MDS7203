@@ -179,5 +179,120 @@ donde \(f_P(x)\) es la densidad de una semi-normal, es decir, \(f_P(x)=\sqrt{\fr
 
 Queremos predecir la cantidad de polen cada 30 minutos usando como única medición el nivel de irritación en nariz y ojos, es decir, se quiere calcular \(\P(X_{30t}|Y_{1:30t})=\P(X_{30t}|Y_1,\ldots,Y_{30t})\), para lo cual se podría utilizar el filtro de Kalman.
 \end{enumerate}
+
+\section*{Parte 3 (Introducción al Transporte Óptimo)}
+\begin{enumerate}
+\item[(a)] Dadas dos distribuciones discretas \(\alpha=\sum_{i=1}^na_i\delta_{x_i}\) y \(\beta=\sum_{j=1}^mb_j\delta_{y_j}\). El transporte óptimo entre \(\alpha\) y \(\beta\) está dado por \(P^\ast\) que resuelve el siguiente problema de minimización:
+\begin{equation}\tag{\(P\)}
+	\begin{aligned}
+			\min_{P\in\mathcal M_{nm}} \quad & \sum_{i=1}^n\sum_{j=1}^m P_{ij}C_{ij}\\
+			\textrm{s.a.} \quad & \sum_{j=1}^mP_{ij} = a_i,~\forall i\in[n] \\
+			& \sum_{i=1}^nP_{ij} = b_j,~\forall j\in[m]\\
+			& P_{ij}\geq0,~\forall i\in[n],j\in[m]
+		\end{aligned}
+\end{equation}
+donde \(C_{ij}=\|x_i-y_j\|^2\). Identificando las matrices \(P\) y \(C\) como vectores en \(\R^{nm}\) apilando las filas de la siguiente manera:
+
+\[P_{i\bullet}^T=\begin{pmatrix}P_{i1}\\\vdots\\P_{im}\end{pmatrix}\in\R^m\Rightarrow P=\begin{pmatrix}
+		P_{1\bullet}^T\\
+		\hline
+		\vdots\\
+		\hline
+		P_{n\bullet}^T
+	\end{pmatrix}\in\R^{nm},\quad C_{i\bullet}^T=\begin{pmatrix}C_{i1}\\\vdots\\C_{im}\end{pmatrix}\in\R^m\Rightarrow C=\begin{pmatrix}
+	C_{1\bullet}^T\\
+	\hline
+	\vdots\\
+	\hline
+	C_{n\bullet}^T
+	\end{pmatrix}\in\R^{nm},\]
+	
+	el problema \((P)\) se puede reescribir como el siguiente problema lineal \((PL)\):
+	\begin{equation}\tag{\(PL\)}
+		\begin{aligned}
+				\min_{P\in\R^{nm}} \quad & C^TP\\
+				\textrm{s.a.} \quad & ZP=\omega\\
+				& P\geq0
+			\end{aligned}
+	\end{equation}
+	donde usamos
+	\begin{equation*}
+		Z=\left[\begin{array}{ c | c | c}
+				A_1 & \cdots & A_n \\
+				\hline
+				I_m & \cdots & I_m
+			\end{array}\right]\in\mathcal M_{n+m,nm},\quad\omega=\begin{pmatrix}a_1&\cdots&a_n&\vline  &b_1&\cdots &b_m\end{pmatrix}^T\in\R^{n+m}
+	\end{equation*}
+	y \(A_i\in\mathcal M_{nm}\) es una matriz de \(0\)'s en todas las posiciones excepto en la fila \(i\), que tiene solo \(1\)'s e \(I_m\) es la matriz identidad en \(\mathcal M_{mm}\).
+	
+	\item[(b)] Para el caso $d=1$ tenemos que $\Sigma_1=\sigma_1^2$ y $\Sigma_2=\sigma_2^2$ corresponden a las varianzas y $A=\sigma_1^{-1}\left(\sigma_1\sigma_2^2\sigma_1\right)^{1/2}\sigma_1^{-1}=\frac{\sigma_2}{\sigma_1}$, por lo cual el transporte óptimo viene dado por 
+	
+	$$T(x)=\mu_2+\frac{\sigma_2}{\sigma_1}(x-\mu_1).$$
+	
+	Notemos que el transporte óptimo se puede ver como tres transformaciones que llevan $\mathcal N(\mu_1,\Sigma_1)$ a $\mathcal N(\mu_2,\Sigma_2)$. Sea $x\in\mathcal N(\mu_1,\sigma_1^2)$, entonces $x-\mu_1\in\mathcal N(0,\sigma_1)$, es decir, llevamos $x$ al origen, luego al multiplicar por $A$ tenemos $A(x-\mu_1)\in\mathcal N(0,\sigma_2^2)$, es decir, achicamos por $\sigma_1$ y amplificamos por $\sigma_2$, y por último, trasladamos a la segunda distribución de modo que $\mu_2+A(x-\mu_1)\in\mathcal N(\mu_2,\sigma_2^2)$.
+	
+	De manera general (para $d>1$) la intución es la misma, primero trasladamos los datos al origen, luego en el origen deformamos la primera distribución hasta obtener la forma de la segunda distribución. Por último, una vez obtenemos la forma correcta, centramos en la media de la distribución objetivo.
+	
+	\item[(c)] Sampleamos muestras de dos distribuciones normales. Nuestra distribución inicial será \(\mathcal N(0,3)\) y samplearemos \(50\) muestras, y la distribución objetivo será \(\mathcal N(5,2)\) y samplearemos \(60\) muestras.
+	
+	\begin{figure}[H]
+		\subfloat{\includegraphics[scale=0.6]{Imágenes/distributions-1d.pdf}}
+		\caption{Muestras de distribuciones normales.}
+	\end{figure}
+	
+	Aplicando el método anterior, obtenemos el siguiente transporte óptimo.
+	
+	\begin{figure}[H]
+		\subfloat{\includegraphics[scale=0.5]{Imágenes/ot-1d.pdf}}
+		\caption{Matriz de distancias y transporte óptimo.}
+	\end{figure}
+	
+	El valor óptimo obtenido por el método fue de \(22.88\), mientras que la distancia de Wasserstein entre las dos distribuciones es \(25.10\), por lo que obtuvimos un resultado parecido usando el método que estaba aproximando una normal mediante muestras.
+	
+	\item[(d)] Sampleamos muestras de dos distribuciones normales en \(\R^2\). La distribución inicial será \(\mathcal N(\mu_1,\Sigma_1)\) de la cual samplearemos \(10\) muestras, y la distribución objetivo será \(\mathcal N(\mu_2,\Sigma_2)\) de la cual samplearemos \(15\) muestras, donde\[\mu_1=\begin{pmatrix}
+		0\\0
+	\end{pmatrix},\quad\mu_2=\begin{pmatrix}
+	10\\3
+\end{pmatrix},\quad\Sigma_1=\begin{pmatrix}
+1&0\\0&1
+\end{pmatrix},\quad\Sigma_2=\begin{pmatrix}
+2&1\\1&2
+\end{pmatrix}\]
+son las medias y matrices de covarianza respectivas.
+	
+	\begin{figure}[H]
+		\subfloat{\includegraphics[scale=0.6]{Imágenes/samples-2d.pdf}}
+		\caption{Muestras de distribuciones normales en \(\R^2\)}
+	\end{figure}
+	
+	Obtenemos el siguiente transporte óptimo.
+	
+	\begin{figure}[H]
+		\subfloat{\includegraphics[scale=0.5]{Imágenes/ot-2d.pdf}}
+		\caption{Matriz de distancias y transporte óptimo.}
+	\end{figure}
+	
+	Esto se traduce en las siguientes asignaciones.
+	
+	\begin{figure}[H]
+		\subfloat{\includegraphics[scale=0.55]{Imágenes/asignations.pdf}}
+		\caption{Asignaciones.}
+	\end{figure}
+	
+	\item[(e)] El baricentro nos permite visualizar cómo ocurre la transformación de la distribución inicial hacia la distribución objetivo.
+	
+	\begin{multicols}{2}
+	\begin{figure}[H]
+		\subfloat{\includegraphics[width=\linewidth, height=0.6\linewidth]{Imágenes/barycenter_0.00}}\\
+		\subfloat{\includegraphics[width=\linewidth, height=0.6\linewidth]{Imágenes/barycenter_0.76}}
+	\end{figure}
+	\begin{figure}[H]
+		\subfloat{\includegraphics[width=\linewidth, height=0.6\linewidth]{Imágenes/barycenter_0.33}}\\
+		\subfloat{\includegraphics[width=\linewidth, height=0.6\linewidth]{Imágenes/barycenter_1.00}}
+	\end{figure}
+	\end{multicols}
+
+En el siguiente \href{https://github.com/DanielMinaya1/MDS7203/blob/main/Laboratorio_1/barycenter.gif}{link} se puede ver una animación para \(100\) valores de \(t\) entre \(0\) y \(1\).
+\end{enumerate}
 % FIN DEL DOCUMENTO
 \end{document}
