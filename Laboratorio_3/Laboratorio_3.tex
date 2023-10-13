@@ -1,0 +1,182 @@
+% Template:     Informe LaTeX
+% Documento:    Archivo principal
+% Versión:      8.2.3 (03/04/2023)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        pablo@ppizarror.com
+%
+% Manual template: [https://latex.ppizarror.com/informe]
+% Licencia MIT:    [https://opensource.org/licenses/MIT]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[
+	spanish, % Idioma: spanish, english, etc.
+	letterpaper, oneside
+]{article}
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\documenttitle {\textbf{Laboratorio 3}}
+\def\documentsubtitle {}
+\def\documentsubject {\textbf{Autoencoders Variacionales}}
+
+\def\documentauthor {Daniel Minaya}
+\def\coursename {\textbf{Modelos Generativos Profundos}}
+\def\coursecode {\textbf{MDS7203}}
+
+\def\universityname {Universidad de Chile}
+\def\universityfaculty {Facultad de Ciencias Físicas y Matemáticas}
+\def\universitydepartment {Departamento de Ingeniería Matemática}
+\def\universitydepartmentimage {../Template_Informe/img/departamentos/dim}
+\def\universitydepartmentimagecfg {height=1.57cm}
+\def\universitylocation {Santiago de Chile}
+
+% INTEGRANTES, PROFESORES Y FECHAS
+\def\authortable {
+	\begin{tabular}{ll}
+		\textbf{Estudiante:}
+		& \begin{tabular}[t]{l}
+			Daniel Minaya
+		\end{tabular} \\
+		\textbf{Profesor:}
+		& \begin{tabular}[t]{l}
+			Felipe Tobar
+		\end{tabular} \\
+		\textbf{Auxiliares:}
+		& \begin{tabular}[t]{l}
+			Cristóbal Alcázar\\
+			Camilo Carvajal
+		\end{tabular} \\
+		& \\
+		\multicolumn{2}{l}{\textbf{Fecha de entrega:} 13 de octubre}
+	\end{tabular}
+}
+
+% IMPORTACIÓN DEL TEMPLATE
+\input{../Template_Informe/template}
+
+\newcommand\sol[1]{%
+	{\color{Blue}{#1}}
+}
+
+\usepackage{paracol}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+% INICIO DE PÁGINAS
+\begin{document}
+
+% PORTADA
+\templatePortrait
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\templatePagecfg
+
+% RESUMEN O ABSTRACT
+%\begin{abstractd}
+%	\lipsum[1] % Párrafo ejemplo, se puede borrar
+%\end{abstractd}
+
+% TABLA DE CONTENIDOS - ÍNDICE
+%\templateIndex
+
+% CONFIGURACIONES FINALES
+\templateFinalcfg
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\section*{Cota inferior de evidecia}
+Definimos la divergencia de Kullback-Leibler entre dos medidas de probabilidad \(p\) y \(q\) como:
+\[D_{KL}(p(x)||q(x))=\E_{x\sim p(\cdot)}\left(\log\left(\frac{p(x)}{q(x)}\right)\right).\]
+\begin{enumerate}
+	\item[(a)] Demuestre la siguiente equivalencia,
+	\[D_{KL}(q(z|x)||p(z||x))=\log p(x)+\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(x,z)}\right)\right),\]
+	donde \(x\mapsto p(x|z)\) denota la medida de probabilidad condicional a \(z\).
+	
+	\sol{Por el teorema de Bayes tenemos que \(p(x,z)=p(z|x)p(x)\), luego
+	\begin{align*}
+		D_{KL}(q(z|x)||p(z||x))&=\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(z|x)}\right)\right)=\E_{z\sim q(\cdot|x)}\left(\log\left(p(x)\cdot\frac{q(z|x)}{p(x,z)}\right)\right)\\
+		&=\E_{z\sim q(\cdot|x)}\left(\log p(x)+\log\left(\frac{q(z|x)}{p(x,z)}\right)\right)\\
+		&=\E_{z\sim q(\cdot|x)}\left(\log p(x)\right)+\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(x,z)}\right)\right)\\
+		&=\log p(x)+\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(x,z)}\right)\right).
+	\end{align*}
+	}
+	
+	\item[(b)] Demuestre que
+	\[\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(x,z)}\right)\right)=D_{KL}(q(z|x)||p(z))-\E_{z\sim q(\cdot|x)}\left(\log p(x|z)\right).\]
+	
+	\sol{Por el teorema de Bayes tenemos que \(p(x,z)=p(x|z)p(z)\), luego
+		\begin{align*}
+			D_{KL}(q(z|x)||p(z))&=\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(z)}\right)\right)\\
+			&=\E_{z\sim q(\cdot|x)}\left(\log\left(p(x|z)\cdot\frac{q(z|x)}{p(x,z)}\right)\right)\\
+			&=\E_{z\sim q(\cdot|x)}\left(\log p(x|z)+\log\left(\frac{q(z|x)}{p(x,z)}\right)\right)\\
+			&=\E_{z\sim q(\cdot|x)}\left(\log p(x|z)\right)+\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(x,z)}\right)\right).
+		\end{align*}
+	}
+	
+	\item[(c)] Usando las partes anteriores, escriba una cota inferior de la log-verosimilitud.
+
+	\sol{Usando que la divergencia KL es siempre no negativa, tenemos
+	\begin{align*}
+		\log p(x)&=D_{KL}(q(z|x)||p(z||x))-\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(x,z)}\right)\right)\\
+		&\geq-\E_{z\sim q(\cdot|x)}\left(\log\left(\frac{q(z|x)}{p(x,z)}\right)\right)=\E_{z\sim q(\cdot|x)}\left(\log p(x|z)\right)-D_{KL}(q(z|x)||p(z)).
+	\end{align*}
+	}
+\end{enumerate}
+
+\section*{Reparametrización}
+Considere que la divergencia de Kullback-Leibler entre una distribución Gaussiana estándar \(p(x)\sim\mathcal N(0, I)\) y una Gaussiana (no necesariamente estándar) \(q(x)\sim\mathcal N(\mu,\sigma^2)\) tiene una forma cerrada dada por:
+\[
+	D_{KL}(q(z)||p(z))=-\E_{z\sim q(\cdot)}\left(\log\left(\frac{p(z)}{q(z)}\right)\right)=-\frac{1}{2}\sum_{j=1}^J\left(1+\log\sigma_j^2-\mu_j^2-\sigma_j^2\right),
+\]
+con \(\mu=(\mu_1,\ldots,\mu_J)\) y \(\sigma=(\sigma_1,\ldots,\sigma_J)\) para \(J\) la dimensionalidad de la variable latente \(z\). Además, podemos usar el truco de la reparametrización para reescribir, dada una función \(f\), lo siguiente:
+\[
+	\E_{z\sim\mathcal N(\mu,\sigma^2)}(f(z))=\E_{\varepsilon\sim\mathcal N(0,1)}(f(\mu+\sigma\varepsilon)).
+\]
+Además, podemos considerar una estimación de Monte-Carlo para la esperanza:
+\[
+	\E_{\varepsilon\sim\mathcal N(0,1)}(f(\mu+\sigma\varepsilon))=\frac{1}{L}\sum_{\ell=1}^L f(\mu+\sigma\varepsilon_\ell),
+\]
+donde \(\varepsilon_\ell\) es una realización de \(\mathcal N(0,1)\) para \(\ell=1,\ldots,L\).
+
+\begin{enumerate}
+\item[(a)] Considerando una formulación apropiada de la ELBO y usando lo anterior, entregue una aproximación de \(\mathcal L_{\phi,\theta}(x)\) para un punto de dato \(x\), en el caso donde \(p_\theta(z)=\mathcal N(z;0,I)\) y \(q_\phi(z|x)=\mathcal N(z;\mu,\sigma^2)\).
+
+Nota 1: \(\mu\) y \(\sigma\) serán determinados posteriormente.
+
+Nota 2: \(p_\theta(z)\) no tiene parámetros, pero \(p_\theta(x|z)\) si los tiene.
+
+\sol{Tenemos que \(\mathcal L_{\phi,\theta}(x)=\E_{z\sim q_\phi(\cdot|x)}(\log p_\theta(x|z))-D_{KL}(q_\phi(z|x)||p_\theta(z))\).  Reemplazando
+\begin{align*}
+	\mathcal L_{\phi,\theta}(x)&=\E_{z\sim\mathcal N(\mu,\sigma^2)}(\log p_\theta(x|z))-D_{KL}(q_\phi(z|x)||p_\theta(z))\\
+	&=\E_{\varepsilon\sim\mathcal N(0,1)}(\log p_\theta(x|\mu+\sigma\varepsilon))+\frac{1}{2}\sum_{j=1}^J\left(1+\log\sigma_j^2-\mu_j^2-\sigma_j^2\right)\\
+	&\approx\frac{1}{L}\sum_{\ell=1}^L\log p_\theta(x|\mu+\sigma\varepsilon_\ell)+\frac{1}{2}\sum_{j=1}^J\left(1+\log\sigma_j^2-\mu_j^2-\sigma_j^2\right),
+\end{align*}
+donde \(\varepsilon_\ell\) es una realización de \(\mathcal N(0,1)\) para \(\ell=1,\ldots, L\).
+}
+\end{enumerate}
+
+Un autoencoder variacional corresponderá al caso anterior donde además computamos los elementos aprendibles a través de redes neuronales. Supondremos que nuestros datos son un subconjunto de los reales, i.e., \(x\in\R^n\), por lo cual consideramos que la distribución \(p_\theta(x|z)\) será una Gaussiana multivariada dado un \(z\in\R^J\) fijo. Responda lo siguiente considerando la aproximación de la parte anterior:
+\begin{enumerate}
+	\item[(b)] ¿Qué variables son modeladas por el encoder y el decoder respectivamente? Explique qué representan.
+	
+	\sol{
+	El encoder modela la variable latente \(z\). Su objetivo principal es codificar un dato \(x\in\R^n\) en la variable \(z\in\R^J\) con \(J<n\). En otras palabras, el encoder transforma la entrada en un código de menor dimensión. Por otro lado, el decoder modela las variables de salida \(\hat{x}\), con el propósito de generar una versión reconstruida a partir de un código \(z\).
+	}
+	
+	\item[(c)] ¿Cómo generamos nuevos puntos de datos? Explique de qué modo logramos expresividad en los modelos pese a lo simple de las distribuciones.
+	
+	\sol{Para generar un dato lo que hacemos es samplear un punto \(z\) usando la distribución aprendida por el encoder durante el entrenamiento, luego pasamos \(z\) por el decoder para transformar \(z\) desde el espacio latente al espacio de datos, obteniendo así un dato generado \(\hat x\).
+	
+	La expresividad en un VAE se logra que el muestreo en el espacio latente es aleatorio, permitiendo generar una variedad de muestras distintas agregando mayor diversidad en las muestras generados. Además, recordemos que la dimensión del espacio latente es menor a la del espacio de los datos, por loque un VAE aprende a representar las características más significativas de los datos, lo que permite la generación de muestras más coherentes y expresivas.
+	}
+	
+	\item[(d)] Explique cual es el problema de intentar usar descenso de gradiente (estocástico)	para optimizar la ELBO antes del truco de la reparametrización.
+
+
+	\sol{El problema al usar descenso gradiente se encuentra en la parte de backpropagation. Debido a que \(z\) es sampleado de la distribución \(\mathcal N(\mu,\sigma^2)\), entonces la loss function no es diferenciable con respecto a los parámetros \(\mu\) y \(\sigma^2\), por lo cual no es posible hacer la actualización. Para solucionar este problema se utiliza el truco de la reparametrización, lo que permite que el paso de \(x\) a \(z\) sea determinista, al dejar la aleatoriedad a una variable \(\varepsilon\in\mathcal N(0,1)\) independiente de los parámetros. 
+	}
+\end{enumerate}
+
+% FIN DEL DOCUMENTO
+\end{document}
